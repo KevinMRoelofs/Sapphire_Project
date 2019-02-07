@@ -30,7 +30,7 @@ namespace Sapphire
 	public:
 		~ActorManager();
 		std::vector<std::shared_ptr<Actor>> allActors_;
-		std::weak_ptr<Actor> CreateActor(const char* texturePath, glm::vec2 newPos, std::shared_ptr<Actor> actorPtr);
+		std::weak_ptr<Actor> CreateActor(const std::string &texturePath, glm::vec2 newPos, std::shared_ptr<Actor> actorPtr);
 		std::weak_ptr<Actor> GetActor(const int &elementIndex);
 		bool DeleteActor(std::weak_ptr<Actor> actorToDelete);
 		int actorCount = 0;

@@ -21,7 +21,7 @@ namespace Sapphire
 	public:
 		PlayerManager();
 		~PlayerManager();
-		std::weak_ptr<Player> CreatePlayer(const char* texturePath, glm::vec2 newPos, int playerId = 0);
+		std::weak_ptr<Player> CreatePlayer(const std::string texturePath, glm::vec2 newPos, int playerId = 0);
 		bool DeletePlayer(std::weak_ptr<Player> playerToDelete);
 		void UpdatePlayers();
 

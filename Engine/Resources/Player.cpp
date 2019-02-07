@@ -44,7 +44,7 @@ namespace Sapphire
 
 	}
 
-	std::weak_ptr<Player> PlayerManager::CreatePlayer(const char* texturePath, glm::vec2 newPos, int playerId)
+	std::weak_ptr<Player> PlayerManager::CreatePlayer(const std::string texturePath, glm::vec2 newPos, int playerId)
 	{
 		for(auto &player: players_)
 		{
@@ -53,12 +53,11 @@ namespace Sapphire
 				playerManager_.DeletePlayer(player);
 			}
 		}
-		std::shared_ptr<Player> newPlayer = std::make_shared<Player>();
+		const std::shared_ptr<Player> newPlayer(new Player);
 		newPlayer->playerId_ = playerId;
-		players_.push_back(newPlayer);
 		actorManager_.CreateActor(texturePath, newPos, newPlayer);
+		players_.push_back(newPlayer);
 		return players_.back();
-		//return newPlayer;
 	}
 
 	bool PlayerManager::DeletePlayer(std::weak_ptr<Player> playerToDelete)

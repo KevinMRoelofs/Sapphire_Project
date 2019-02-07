@@ -45,29 +45,22 @@ namespace Sapphire
 		}
 
 		if (inputManager_.AllKeyStates_[Key_Z].isHeld) rotation_ += 5;
-		//if (Id_ == 2) printf("Y axis: %f\n", GetPosition().y);
 	}
 
 	ActorManager::~ActorManager()
 	{
 		allActors_.clear();
-		int i = 0;
 	}
 
-	std::weak_ptr<Actor> ActorManager::CreateActor(const char* texturePath, glm::vec2 newPos, std::shared_ptr<Actor> actorPtr = nullptr)
+	std::weak_ptr<Actor> ActorManager::CreateActor(const std::string &texturePath, glm::vec2 newPos, std::shared_ptr<Actor> actorPtr = nullptr)
 	{
 		if (!actorPtr)
 		{
 			actorPtr = std::make_shared<Actor>();
 		}
-		//std::shared_ptr<Actor> newActor = std::make_shared<Actor>();
 		objectManager_.CreateObject(texturePath, "Quad", newPos, actorPtr);
 
-
 		allActors_.push_back(actorPtr);
-		//objectManager_.allObjects_.push_back(newActor);
-
-		//newActor->Create(texturePath, newPos);
 
 		return allActors_.back();
 	}

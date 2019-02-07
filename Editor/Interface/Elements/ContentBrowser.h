@@ -6,6 +6,11 @@
 
 namespace Sapphire
 {
+	struct ContentAsset
+	{
+		ContentAsset(const std::string &newPath);
+		const std::string path_;
+	};
 
 	class ContentBrowser : public InterfaceElement
 	{
@@ -16,14 +21,20 @@ namespace Sapphire
 		void Update() override;
 		void End() override;
 
-		struct ContentAsset
-		{
-			ContentAsset(const std::string &newPath);
-			const std::string path_;
-		};
 
-		void ScanDirectory(); 
-		std::vector<ContentAsset> contentAssets_;
+		void ScanDirectory(const std::string &path, std::vector<ContentAsset> &list);
+
+		std::vector<ContentAsset> playerAssets_;
+		std::vector<ContentAsset> npcAssets_;
+		std::vector<ContentAsset> tileAssets_;
+
+		enum ObjectType
+		{	
+			OT_All,
+			OT_Actor,
+			OT_Player,
+			OT_Tile
+		} currentListedObjectType = OT_All;
 	};
 
 	extern ContentBrowser contentBrowser_;

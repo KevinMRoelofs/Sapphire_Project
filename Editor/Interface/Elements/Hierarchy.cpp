@@ -122,6 +122,12 @@ namespace Sapphire
 	{
 		for (auto &object : selectedObjects_)
 		{
+			if (object.expired()) 
+			{
+				Deselect(object);
+				continue;
+			}
+
 			//Enable Dragging if a Select Object is clicked on
 			if (inputManager_.AllKeyStates_[MouseButton_Left].isPressed && cursorPosCurrent.x > object.lock()->GetPositionScreen().x + object.lock()->GetMesh()->GetBoundsMin().x * engine_.GetTileSize() && cursorPosCurrent.x < object.lock()->GetPositionScreen().x + object.lock()->GetMesh()->GetBoundsMax().x * engine_.GetTileSize() &&
 				cursorPosCurrent.y < object.lock()->GetPositionScreen().y - object.lock()->GetMesh()->GetBoundsMin().y * engine_.GetTileSize() && cursorPosCurrent.y > object.lock()->GetPositionScreen().y - object.lock()->GetMesh()->GetBoundsMax().y * engine_.GetTileSize())
