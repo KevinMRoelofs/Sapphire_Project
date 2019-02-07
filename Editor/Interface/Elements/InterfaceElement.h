@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 
 struct ImDrawList;
 
@@ -8,13 +9,13 @@ namespace Sapphire
 	{
 	public:
 		InterfaceElement();
-		~InterfaceElement();
+		virtual ~InterfaceElement();
 
 		virtual void Start();
 		virtual void Update() {};
 		virtual void End();
 
-		char* name_;
+		std::string name_;
 		int positionX_, positionY_;
 		int width_, height_;
 		int flags_;

@@ -21,7 +21,7 @@ namespace Sapphire
 
 	void InterfaceElement::Start()
 	{
-		ImGui::Begin(name_, (bool*)NULL, flags_);
+		ImGui::Begin(name_.c_str(), (bool*)NULL, flags_);
 		ImGui::SetWindowSize(ImVec2(float(width_), float(height_)));
 		ImGui::SetWindowPos(ImVec2(float(positionX_), float(positionY_)));
 		cursorHover = ImGui::IsWindowHovered(ImGuiHoveredFlags_AllowWhenBlockedByActiveItem);
