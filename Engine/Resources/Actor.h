@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Engine/Resources/Object.h"
+#include "Engine/Resources/Tile.h"
 #include <memory>
 
 namespace Sapphire

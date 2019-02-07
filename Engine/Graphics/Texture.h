@@ -8,7 +8,7 @@ namespace Sapphire
 	class Texture
 	{
 	public:
-		Texture(const char* newpath);
+		Texture(const std::string newpath);
 		~Texture();
 
 		int width_;
@@ -17,17 +17,17 @@ namespace Sapphire
 
 		//unsigned char* data = nullptr;
 		unsigned int textureId_;
-		const char* path_ = nullptr;
+		const std::string path_ = nullptr;
 	};
 
 	class TextureManager
 	{
 	public:
-		const std::shared_ptr<Texture> &AddNewTexture(const char * newpath);
 		//const std::shared_ptr<Texture> &GetNewestTexture();
-		std::weak_ptr<Texture> GetTexture(const char* path);
+		std::shared_ptr<Texture> GetTexture(const std::string path);
 	private:
-		std::map<const char*, std::shared_ptr<Texture>> allTextures_;
+		const std::shared_ptr<Texture> AddNewTexture(const std::string newpath);
+		std::map<const std::string, std::shared_ptr<Texture>> allTextures_;
 		//std::vector<std::shared_ptr<Texture>> allLoadedTextures;
 	};
 

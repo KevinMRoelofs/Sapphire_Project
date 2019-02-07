@@ -131,7 +131,7 @@ namespace Sapphire
 		ImGui::SetWindowPos(ImVec2(0, 0));
 		{
 			//Spawn Nico on Press and Release
-			if(ImGui::ImageButton((void*)(intptr_t)textureManager_.GetTexture("../Assets/Player/Nico.png").lock()->textureId_, ImVec2(64, 64)))
+			if(ImGui::ImageButton((void*)(intptr_t)textureManager_.GetTexture("../Assets/Player/Nico.png")->textureId_, ImVec2(64, 64)))
 			{
 				glm::vec3 newPos = glm::vec3(0);
 				newPos.x = random_.GenerateFloat(-10.f, 10.f);

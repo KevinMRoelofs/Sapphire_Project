@@ -17,12 +17,12 @@ namespace Sapphire
 	public:
 		Graphics();
 		~Graphics();
-		void SetUpWindow(int const& width, int const& height, const std::string name, const bool& fullScreen);
+		void SetUpWindow(int const& width, int const& height, const std::string& name, const bool& fullScreen);
 
 		bool PrepareRender();
 		void Render() const;
 
-		void ProcessTexture(const unsigned char* path, std::shared_ptr<Texture> passedTexture);
+		void ProcessTexture(const unsigned char* path, const std::shared_ptr<Texture>& passedTexture);
 
 		/// <summary>
 		/// The executable Window

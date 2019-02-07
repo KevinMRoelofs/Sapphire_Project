@@ -60,26 +60,26 @@ namespace Sapphire
 
 		int amountOfLines = 0;
 		//vertical lines
-		const int offsetFixHor = (graphics_.windowWidth_ / 2) % engine_.GetTileSize();
+		const int offsetFixHor = graphics_.windowWidth_ / 2 % engine_.GetTileSize();
 		for (int horizontalLocation = -engine_.GetTileSize() - int(graphics_.camera_.GetPositionWorld().x) % engine_.GetTileSize();
 			horizontalLocation < graphics_.windowWidth_ + engine_.GetTileSize() + int(graphics_.camera_.GetPositionWorld().x) % engine_.GetTileSize();
 			horizontalLocation += engine_.GetTileSize())
 		{
 			amountOfLines++;
-			const ImVec2 &LineTop = ImVec2(int(horizontalLocation) + offsetFixHor, 0.f);
-			const ImVec2 &LineBottom = ImVec2(int(horizontalLocation) + offsetFixHor, float(graphics_.windowHeight_));
+			const ImVec2 &LineTop = ImVec2(float(horizontalLocation + offsetFixHor), 0.f);
+			const ImVec2 &LineBottom = ImVec2(float(horizontalLocation + offsetFixHor), float(graphics_.windowHeight_));
 			ImGui::GetWindowDrawList()->AddLine(LineTop, LineBottom, ImColor(0, 0, 0, 64), 1);
 		}
 
 		//Horizontal lines
-		const int offsetFixVert = (graphics_.windowHeight_ / 2) % engine_.GetTileSize();
+		const int offsetFixVert = graphics_.windowHeight_ / 2 % engine_.GetTileSize();
 		for (int verticalLocation = -engine_.GetTileSize() - -int(graphics_.camera_.GetPositionWorld().y) % engine_.GetTileSize();
 			verticalLocation < graphics_.windowHeight_ + engine_.GetTileSize() + -int(graphics_.camera_.GetPositionWorld().y) % engine_.GetTileSize();
 			verticalLocation += engine_.GetTileSize())
 		{
 			amountOfLines++;
-			const ImVec2 &LineStart = ImVec2(0.f, int(verticalLocation) + offsetFixVert);
-			const ImVec2 &LineEnd = ImVec2(int(graphics_.windowWidth_), float(verticalLocation) + offsetFixVert);
+			const ImVec2 &LineStart = ImVec2(0.f, float(verticalLocation + offsetFixVert));
+			const ImVec2 &LineEnd = ImVec2(float(graphics_.windowWidth_), float(verticalLocation + offsetFixVert));
 			ImGui::GetWindowDrawList()->AddLine(LineStart, LineEnd, ImColor(0, 0, 0, 64), 1);
 		}
 

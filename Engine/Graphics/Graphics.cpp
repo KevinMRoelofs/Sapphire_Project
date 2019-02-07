@@ -32,7 +32,7 @@ namespace Sapphire {
 
 	}
 
-	void Graphics::SetUpWindow(int const& width, int const& height, const std::string name, const bool& fullScreen)
+	void Graphics::SetUpWindow(int const& width, int const& height, const std::string& name, const bool& fullScreen)
 	{
 
 		// glfw: initialize and configure
@@ -189,8 +189,9 @@ namespace Sapphire {
 		glViewport(0, 0, width, height);
 	}
 
-	void Graphics::ProcessTexture(const unsigned char* stbiData, std::shared_ptr<Texture> passedTexture)
+	void Graphics::ProcessTexture(const unsigned char* stbiData, const std::shared_ptr<Texture>& passedTexture)
 	{
+		assert(passedTexture);
 		glGenTextures(1, &passedTexture->textureId_);
 		glBindTexture(GL_TEXTURE_2D, passedTexture->textureId_);
 		// set the texture wrapping/filtering options (on the currently bound texture object)

@@ -154,7 +154,7 @@ namespace Sapphire
 		int i = 0;
 	}
 
-	std::shared_ptr<Object> ObjectManager::CreateObject(const char* texturePath, const char* meshName, glm::vec2 newPos, std::shared_ptr<Object> objectPtr = nullptr)
+	std::shared_ptr<Object> ObjectManager::CreateObject(const std::string texturePath, const char* meshName, glm::vec2 newPos, std::shared_ptr<Object> objectPtr = nullptr)
 	{
 		if (!objectPtr)
 		{
@@ -166,7 +166,7 @@ namespace Sapphire
 		//objectPtr = Object();
 
 		objectPtr->SetMesh(meshManager_.FindMesh(meshName));
-		objectPtr->SetTexture(textureManager_.AddNewTexture(texturePath));
+		objectPtr->SetTexture(textureManager_.GetTexture(texturePath));
 		objectPtr->SetPositionWorld(newPos);
 
 		return objectPtr;

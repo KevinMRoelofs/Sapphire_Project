@@ -65,7 +65,7 @@ namespace Sapphire
 		ObjectManager();
 		~ObjectManager();
 
-		std::shared_ptr<Object> CreateObject(const char* texturePath, const char* meshName, glm::vec2 newPos, std::shared_ptr<Object> ObjectPtr);
+		std::shared_ptr<Object> CreateObject(const std::string texturePath, const char* meshName, glm::vec2 newPos, std::shared_ptr<Object> ObjectPtr);
 		bool DestroyObject(std::weak_ptr<Object> objectToDelete);
 		void Update();
 
