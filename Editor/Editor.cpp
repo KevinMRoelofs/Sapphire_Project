@@ -69,6 +69,7 @@ namespace Sapphire {
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
 		ImGui_ImplGlfwGL3_Init(graphics_.window_, true);
 		ImGui::StyleColorsDark();
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0);
 	}
 
 	void Editor::EditorLoop()
