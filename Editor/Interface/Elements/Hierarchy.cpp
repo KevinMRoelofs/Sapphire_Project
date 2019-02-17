@@ -19,7 +19,6 @@ namespace Sapphire
 		cursorDraggingSelObject = false;
 	}
 
-
 	Hierarchy::~Hierarchy()
 	{
 	}
@@ -34,8 +33,7 @@ namespace Sapphire
 
 	void Hierarchy::Update()
 	{
-		//ImGui::Text("Hierarchy");
-		for (auto &object : objectManager_.allObjects_)
+		for (auto &object : objectManager_->allObjects_)
 		{
 			//Use lines below later for filters
 			//std::weak_ptr<Actor> actorPtr = std::dynamic_pointer_cast<Actor>(object.lock());
@@ -74,7 +72,7 @@ namespace Sapphire
 			//Select All Objects with CTRL + A
 			if (inputManager_.AllKeyStates_[Key_Control].isHeld && inputManager_.AllKeyStates_[Key_A].isPressed)
 			{
-				for (auto &object : objectManager_.allObjects_)
+				for (auto &object : objectManager_->allObjects_)
 				{
 					Select(object, true);
 				}
@@ -84,9 +82,6 @@ namespace Sapphire
 			{
 				cursorPosStart = cursorPosCurrent;
 			}
-
-
-
 
 			if (inputManager_.AllKeyStates_[MouseButton_Left].isReleased)
 			{
@@ -102,7 +97,7 @@ namespace Sapphire
 				cursorDraggingSelObject = false;
 
 				//Selecting an object
-				for (auto &object : objectManager_.allObjects_)
+				for (auto &object : objectManager_->allObjects_)
 				{
 					if (glm::distance(cursorPosStart, cursorPosCurrent) < 4
 						&& cursorPosCurrent.x > object->GetPositionScreen().x + object->GetMesh()->GetBoundsMin().x * engine_.GetTileSize()
@@ -167,15 +162,15 @@ namespace Sapphire
 
 				if (!playerPtr.expired())
 				{
-					playerManager_.DeletePlayer(playerPtr);
+					playerManager_->DeletePlayer(playerPtr);
 				}
 				else if (!actorPtr.expired())
 				{
-					actorManager_.DeleteActor(actorPtr);
+					actorManager_->DeleteActor(actorPtr);
 				}
 				else
 				{
-					objectManager_.DestroyObject(object);
+					objectManager_->DeleteObject(object);
 				}
 				selectedObjects_.pop_back();
 			}
@@ -191,7 +186,7 @@ namespace Sapphire
 			if (cursorPosCurrent != cursorPosLastframe)
 			{
 				if (!inputManager_.AllKeyStates_[Key_Shift].isHeld) selectedObjects_.clear();
-				for (auto &object : objectManager_.allObjects_)
+				for (auto &object : objectManager_->allObjects_)
 				{
 					if ((object->GetPositionScreen().x > cursorPosStart.x && object->GetPositionScreen().x < cursorPosCurrent.x || object->GetPositionScreen().x < cursorPosStart.x && object->GetPositionScreen().x > cursorPosCurrent.x)
 						&& (object->GetPositionScreen().y > cursorPosStart.y && object->GetPositionScreen().y < cursorPosCurrent.y || object->GetPositionScreen().y < cursorPosStart.y && object->GetPositionScreen().y > cursorPosCurrent.y))

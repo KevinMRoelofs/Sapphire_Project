@@ -48,9 +48,6 @@
     <ClCompile Include="Interface\Elements\InterfaceElement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Interface\Elements\Outliner.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Interface\Elements\Hierarchy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -90,9 +87,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Interface\Elements\InterfaceElement.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Interface\Elements\Outliner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Interface\Elements\Hierarchy.h">

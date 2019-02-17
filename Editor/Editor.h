@@ -1,6 +1,5 @@
 #pragma once
 #include <Engine/Dependencies/glm/glm.hpp>
-//#include <Engine/Dependencies/cereal-master/include/cereal/cereal.hpp>
 
 namespace Sapphire
 {
@@ -19,11 +18,10 @@ namespace Sapphire
 			EditMode
 		}projectState_;
 
+		void CreateTemp();
+
 		void Play();
 		void Edit();
-
-		void SaveScene();
-		void LoadScene();
 
 		glm::vec4 clearColor_;
 	};

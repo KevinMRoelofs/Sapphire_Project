@@ -161,7 +161,7 @@ namespace Sapphire {
 		const unsigned int projLoc = glGetUniformLocation(shaderProgram_, "uniProj");
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection_));
 
-		for (const auto& object : objectManager_.allObjects_)
+		for (const auto& object : objectManager_->allObjects_)
 		{
 			object->UpdatePositionScreen();
 			RenderObject(object);
@@ -201,8 +201,6 @@ namespace Sapphire {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, passedTexture->width_, passedTexture->height_, 0, GL_RGBA, GL_UNSIGNED_BYTE, stbiData);
 		glGenerateMipmap(GL_TEXTURE_2D);
-
-
 	}
 
 	const glm::vec4& Graphics::GetClearColor() const
@@ -255,11 +253,10 @@ namespace Sapphire {
 		const unsigned int transformLoc = glGetUniformLocation(shaderProgram_, "uniModel");
 		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(object->model_));
 
-		glBindVertexArray(object->GetMesh()->vao_); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+		glBindVertexArray(object->GetMesh()->vao_);
 		glBindBuffer(GL_ARRAY_BUFFER, object->GetMesh()->vbo_);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, object->GetMesh()->ebo_);
 
-		// draw our first triangle
 		glBindTexture(GL_TEXTURE_2D, object->GetTexture()->textureId_);
 		const GLsizei& indicesAmount = GLsizei(object->GetMesh()->indices_.size());
 		glDrawElements(GL_TRIANGLES, indicesAmount, GL_UNSIGNED_SHORT, nullptr);
@@ -267,8 +264,6 @@ namespace Sapphire {
 
 	void Graphics::UnBufferMesh(std::shared_ptr<Mesh>& newMesh)
 	{
-		// optional: de-allocate all resources once they've outlived their purpose:
-		// ------------------------------------------------------------------------
 		glDeleteVertexArrays(1, &newMesh->vao_);
 		glDeleteBuffers(1, &newMesh->vbo_);
 		glDeleteBuffers(1, &newMesh->ebo_);

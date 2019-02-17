@@ -12,6 +12,7 @@
 #include "Utility/Random.h"
 #include "Utility/Input.h"
 #include "Utility/Action.h"
+#include "Resources/Scene.h"
 
 namespace Sapphire
 {
@@ -24,6 +25,7 @@ namespace Sapphire
 
 		gravity_ = glm::vec2(0, -30);
 		Time_ = float(glfwGetTime());
+
 	}
 
 	Engine::~Engine()
@@ -32,14 +34,12 @@ namespace Sapphire
 
 	void Engine::Start(int const& width, int const& height, const std::string& name, const bool& fullScreen)
 	{
-		//std::cout << "Startup" << std::endl;
 		const std::string &nameString = name + " - Console";
 		const LPCSTR &nameLP = nameString.c_str();
 
 		SetConsoleTitle(nameLP);
 		graphics_.SetUpWindow(width, height, name, fullScreen);
 		meshManager_.Start();
-		
 	}
 
 	void Engine::MainLoop()
@@ -61,7 +61,7 @@ namespace Sapphire
 	void Engine::SetTileSize(const int& newTileSize)
 	{
 		tileSize_ = newTileSize;
-		for(auto &object : objectManager_.allObjects_)
+		for(auto &object : objectManager_->allObjects_)
 		{
 			object->UpdateTransform();
 		}

@@ -31,6 +31,10 @@ namespace Sapphire
 	{
 		for (auto object : hierarchy_.selectedObjects_)
 		{
+			if (object.expired())
+			{
+				continue;
+			}
 			std::weak_ptr<Actor> actorPtr = std::dynamic_pointer_cast<Actor>(object.lock());
 			std::weak_ptr<Player> playerPtr = std::dynamic_pointer_cast<Player>(actorPtr.lock());
 			ImGui::PushID(object.lock()->GetId());

@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include "Engine/Dependencies/glm/glm.hpp"
+#include <memory>
 
 
 namespace Sapphire
@@ -24,7 +25,6 @@ namespace Sapphire
 
 		float timeScale_;
 		float deltaTime_;
-
 
 		glm::vec2 gravity_;
 

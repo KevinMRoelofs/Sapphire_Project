@@ -46,7 +46,6 @@ namespace Sapphire
 
 	MeshManager::MeshManager()
 	{
-
 	}
 
 	MeshManager::~MeshManager()

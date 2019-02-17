@@ -42,13 +42,15 @@
    and /boost/serialization/void_cast.hpp for their implementation. Additional details
    found in other files split across serialization and archive.
 */
+#undef max
+
 #ifndef CEREAL_DETAILS_POLYMORPHIC_IMPL_HPP_
 #define CEREAL_DETAILS_POLYMORPHIC_IMPL_HPP_
 
-#include "cereal/details/polymorphic_impl_fwd.hpp"
-#include "cereal/details/static_object.hpp"
-#include "cereal/types/memory.hpp"
-#include "cereal/types/string.hpp"
+#include "Engine/Dependencies/cereal-master/include/cereal/details/polymorphic_impl_fwd.hpp"
+#include "Engine/Dependencies/cereal-master/include/cereal/details/static_object.hpp"
+#include "Engine/Dependencies/cereal-master/include/cereal/types/memory.hpp"
+#include "Engine/Dependencies/cereal-master/include/cereal/types/string.hpp"
 #include <functional>
 #include <typeindex>
 #include <map>

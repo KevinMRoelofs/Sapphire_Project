@@ -3,6 +3,8 @@
 #include <Editor/Dependencies/imgui-master/imgui.h>
 #include "Engine/Engine.h"
 #include "Engine/Utility/Input.h"
+#include "Engine/Resources/Actor.h"
+#include "Engine/Resources/Player.h"
 
 
 namespace Sapphire
@@ -32,7 +34,9 @@ namespace Sapphire
 	{
 		ShowWorldOrigin();
 		ShowGrid(1);
-		ImGui::Text("Objects: [%i]", objectManager_.allObjects_.size());
+		ImGui::Text("Objects: [%i]", objectManager_->allObjects_.size());
+		ImGui::Text("Actors: [%i]", actorManager_->allActors_.size());
+		ImGui::Text("Players: [%i]", playerManager_->players_.size());
 		//ImGui::Text("Camera Pos x [%f]", graphics_.camera_.GetPositionWorld().x);
 		//ImGui::Text("Camera Pos y [%f]", graphics_.camera_.GetPositionWorld().y);
 		CameraMovement();
@@ -112,7 +116,6 @@ namespace Sapphire
 			}
 			if (inputManager_.AllKeyStates_[MouseButton_Right].isHeld)
 			{
-				//const glm::vec2 &cursorMovement = outliner_.GetCursorScreen() inputManager_.cursorPosScreen - outliner_.GetCursorScreenLastFrame();
 				graphics_.camera_.OffsetPosition(float(-inputManager_.cursorScreenDelta.x), float(inputManager_.cursorScreenDelta.y));
 			}
 			if (inputManager_.AllKeyStates_[Key_C].isPressed)

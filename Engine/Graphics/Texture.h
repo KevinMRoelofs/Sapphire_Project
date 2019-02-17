@@ -3,6 +3,11 @@
 #include <memory>
 #include <map>
 
+#include "Engine/Dependencies/cereal-master/include/cereal/cereal.hpp"
+#include "Engine/Dependencies/cereal-master/include/cereal/archives/binary.hpp"
+#include "Engine/Dependencies/cereal-master/include/cereal/types/string.hpp"
+//#include "Engine/Dependencies/cereal-master/include/cereal/types/memory.hpp"
+
 namespace Sapphire
 {
 	class Texture
@@ -17,7 +22,22 @@ namespace Sapphire
 
 		//unsigned char* data = nullptr;
 		unsigned int textureId_;
-		const std::string path_ = nullptr;
+		const std::string path_ = NULL;
+
+		template<class Archive>
+		void serialize(Archive & archive)
+		{
+			archive(path_); // serialize things by passing them to the archive
+		}
+
+		// We could define load_and_construct internally:
+		template <class Archive>
+		static void load_and_construct(Archive & archive, cereal::construct<Texture> & construct)
+		{
+			std::string path("not a path");
+			archive(path);
+			construct(path);
+		}
 	};
 
 	class TextureManager

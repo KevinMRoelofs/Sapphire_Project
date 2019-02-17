@@ -18,6 +18,8 @@ namespace Sapphire
 		ScanDirectory("../Assets/Npc", npcAssets_);
 		ScanDirectory("../Assets/Player", playerAssets_);
 		ScanDirectory("../Assets/Tiles", tileAssets_);
+
+		currentListedObjectType = OT_All;
 	}
 
 	ContentBrowser::~ContentBrowser()
@@ -47,7 +49,7 @@ namespace Sapphire
 		switch (currentListedObjectType)
 		{
 		case OT_All:
-			//no break; here to enable all cases to hit for this case
+			//no "break;" here to enable all cases to hit for this case
 		case OT_Actor:
 			for (const auto &asset : npcAssets_)
 			{
@@ -57,7 +59,7 @@ namespace Sapphire
 					newPos.x = random_.GenerateFloat(-10.f, 10.f);
 					newPos.y = random_.GenerateFloat(5.5f, 9.5f);
 
-					actorManager_.CreateActor(asset.path_, newPos, nullptr);
+					actorManager_->CreateActor(asset.path_, newPos, nullptr);
 				}
 				ImGui::SameLine(0, 20);
 			}
@@ -71,7 +73,7 @@ namespace Sapphire
 					newPos.x = random_.GenerateFloat(-10.f, 10.f);
 					newPos.y = random_.GenerateFloat(5.5f, 9.5f);
 
-					playerManager_.CreatePlayer(asset.path_, newPos, 0);
+					playerManager_->CreatePlayer(asset.path_, newPos, 0);
 				}
 				ImGui::SameLine(0, 20);
 			}
@@ -85,7 +87,7 @@ namespace Sapphire
 					newPos.x = random_.GenerateFloat(-10.f, 10.f);
 					newPos.y = random_.GenerateFloat(5.5f, 9.5f);
 
-					objectManager_.CreateObject(asset.path_, "Quad", newPos, nullptr);
+					objectManager_->CreateObject(asset.path_, "Quad", newPos, nullptr);
 				}
 				ImGui::SameLine(0, 20);
 			}

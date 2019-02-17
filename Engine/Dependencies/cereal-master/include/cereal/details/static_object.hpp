@@ -28,7 +28,7 @@
 #ifndef CEREAL_DETAILS_STATIC_OBJECT_HPP_
 #define CEREAL_DETAILS_STATIC_OBJECT_HPP_
 
-#include "cereal/macros.hpp"
+#include "Engine/Dependencies/cereal-master/include/cereal/macros.hpp"
 
 #if CEREAL_THREAD_SAFE
 #include <mutex>

@@ -6,11 +6,11 @@
 
 namespace Sapphire
 {
-	PlayerManager playerManager_;
+	std::shared_ptr<PlayerManager> playerManager_(new PlayerManager);
 
 	Player::Player()
 	{
-		
+
 	}
 
 	Player::~Player()
@@ -23,7 +23,7 @@ namespace Sapphire
 		movementDirection_ = glm::vec3(0);
 		if (inputManager_.AllKeyStates_[Key_Space].isPressed)
 		{
- 			velocity_.y += jumpStrength_;
+			velocity_.y += jumpStrength_;
 		}
 		if (inputManager_.AllKeyStates_[Key_D].isHeld)
 		{
@@ -37,6 +37,7 @@ namespace Sapphire
 
 	PlayerManager::PlayerManager()
 	{
+
 	}
 
 	PlayerManager::~PlayerManager()
@@ -44,19 +45,25 @@ namespace Sapphire
 
 	}
 
-	std::weak_ptr<Player> PlayerManager::CreatePlayer(const std::string texturePath, glm::vec2 newPos, int playerId)
+	std::weak_ptr<Player> PlayerManager::CreatePlayer(const std::string texturePath, glm::vec2 newPos, int playerId, std::shared_ptr<Player> playerPtr)
 	{
-		for(auto &player: players_)
+		for (auto &player : players_)
 		{
-			if(player->playerId_ == playerId)
+			if (player->playerId_ == playerId)
 			{
-				playerManager_.DeletePlayer(player);
+				playerManager_->DeletePlayer(player);
 			}
 		}
-		const std::shared_ptr<Player> newPlayer(new Player);
-		newPlayer->playerId_ = playerId;
-		actorManager_.CreateActor(texturePath, newPos, newPlayer);
-		players_.push_back(newPlayer);
+
+		if (!playerPtr)
+		{
+			playerPtr = std::make_shared<Player>();
+		}
+
+		actorManager_->CreateActor(texturePath, newPos, playerPtr);
+		playerPtr->playerId_ = playerId;
+
+		players_.push_back(playerPtr);
 		return players_.back();
 	}
 
@@ -66,26 +73,28 @@ namespace Sapphire
 		int currentElementIndex = 0;
 		for (auto &player : players_)
 		{
-			if (player == playerToDelete.lock())
+			if (player.get() == playerToDelete.lock().get())
 			{
-				//printf(": Destroyed Player %i \n", deletePlayerId);
-				// DeleteObject function here{
 				std::rotate(players_.begin(), players_.begin() + currentElementIndex + 1, players_.end());
 				players_.pop_back();
 				std::rotate(players_.begin(), players_.end() - currentElementIndex, players_.end());
-				
-				actorManager_.DeleteActor(player);
+
+				actorManager_->DeleteActor(player);
 				return true;
-				//}
 			}
 			currentElementIndex++;
 		}
 		return false;
 	}
 
+	void PlayerManager::DeleteAllPlayers()
+	{
+		players_.clear();
+	}
+
 	void PlayerManager::UpdatePlayers()
 	{
-		for(auto &player: players_)
+		for (auto &player : players_)
 		{
 			player->UpdateMovement();
 		}
@@ -94,5 +103,10 @@ namespace Sapphire
 	std::weak_ptr<Player> PlayerManager::GetPlayer(int index)
 	{
 		return players_[index];
+	}
+
+	std::vector<std::shared_ptr<Player>> PlayerManager::GetAllPlayers()
+	{
+		return players_;
 	}
 }

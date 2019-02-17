@@ -29,12 +29,12 @@ namespace Sapphire
 		std::vector<ContentAsset> tileAssets_;
 
 		enum ObjectType
-		{	
+		{
 			OT_All,
 			OT_Actor,
 			OT_Player,
 			OT_Tile
-		} currentListedObjectType = OT_All;
+		} currentListedObjectType;
 	};
 
 	extern ContentBrowser contentBrowser_;

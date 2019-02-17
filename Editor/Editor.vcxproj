@@ -169,7 +169,6 @@
     <ClCompile Include="Dependencies\imgui-master\imgui_draw.cpp" />
     <ClCompile Include="Dependencies\imgui-master\opengl3\imgui_impl_glfw_gl3.cpp" />
     <ClCompile Include="Editor.cpp" />
-    <ClCompile Include="Interface\Elements\Outliner.cpp" />
     <ClCompile Include="Interface\Elements\SceneView.cpp" />
     <ClCompile Include="Interface\Elements\Hierarchy.cpp" />
   </ItemGroup>
@@ -185,7 +184,6 @@
     <ClInclude Include="Dependencies\imgui-master\stb_textedit.h" />
     <ClInclude Include="Dependencies\imgui-master\stb_truetype.h" />
     <ClInclude Include="Editor.h" />
-    <ClInclude Include="Interface\Elements\Outliner.h" />
     <ClInclude Include="Interface\Elements\SceneView.h" />
     <ClInclude Include="Interface\Elements\Hierarchy.h" />
   </ItemGroup>

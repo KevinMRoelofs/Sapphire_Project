@@ -6,7 +6,7 @@
 
 namespace Sapphire
 {
-	ActorManager actorManager_;
+	std::shared_ptr<ActorManager> actorManager_(new ActorManager);
 
 	Actor::Actor()
 	{
@@ -52,22 +52,30 @@ namespace Sapphire
 		allActors_.clear();
 	}
 
-	std::weak_ptr<Actor> ActorManager::CreateActor(const std::string &texturePath, glm::vec2 newPos, std::shared_ptr<Actor> actorPtr = nullptr)
+	std::weak_ptr<Actor> ActorManager::CreateActor(const std::string &texturePath, glm::vec2 newPos, std::shared_ptr<Actor> actorPtr)
 	{
 		if (!actorPtr)
 		{
 			actorPtr = std::make_shared<Actor>();
 		}
-		objectManager_.CreateObject(texturePath, "Quad", newPos, actorPtr);
+
+
+		for (auto &actor : allActors_)
+		{
+			if (actorPtr.get() == actor.get())
+			{
+				return allActors_.back();
+			}
+		}
+		objectManager_->CreateObject(texturePath, "Quad", newPos, actorPtr);
 
 		allActors_.push_back(actorPtr);
-
 		return allActors_.back();
 	}
 
 	std::weak_ptr<Actor> ActorManager::GetActor(const int& elementIndex)
 	{
-		if(allActors_.size() - 1 > elementIndex && elementIndex >= 0)
+		if (allActors_.size() - 1 > elementIndex && elementIndex >= 0)
 		{
 			return allActors_[elementIndex];
 		}
@@ -77,20 +85,25 @@ namespace Sapphire
 	{
 		if (actorToDelete.expired()) return false;
 		int currentElementIndex = 0;
-		for(auto &actor : allActors_)
+		for (auto &actor : allActors_)
 		{
-			if(actor == actorToDelete.lock())
+			if (actor.get() == actorToDelete.lock().get())
 			{
 				//printf("Destroyed Actor %i ", deleteActorObjectId);
 				std::rotate(allActors_.begin(), allActors_.begin() + currentElementIndex + 1, allActors_.end()); //rotate ActorToDelete to end of vector
 				allActors_.pop_back();
 				std::rotate(allActors_.begin(), allActors_.end() - currentElementIndex, allActors_.end()); //rotate vector back to it was
-				objectManager_.DestroyObject(actorToDelete);
+				objectManager_->DeleteObject(actorToDelete);
 
 				return true;
 			}
 			currentElementIndex++;
 		}
 		return false;
+	}
+
+	void ActorManager::DeleteAllActors()
+	{
+		allActors_.clear();
 	}
 }
