@@ -19,6 +19,7 @@
 
 #include <fstream>
 #include <filesystem>
+#include "Interface/Elements/Hierarchy.h"
 
 using namespace Sapphire;
 
@@ -78,7 +79,11 @@ namespace Sapphire {
 		if (inputManager_.AllKeyStates_[Key_Tab].isPressed && editor_.projectState_ != Editor::EditMode) Edit();
 		else if (inputManager_.AllKeyStates_[Key_Tab].isPressed && editor_.projectState_ != Editor::PlayMode) Play();
 
-		if (inputManager_.AllKeyStates_[Key_Control].isHeld && inputManager_.AllKeyStates_[Key_N].isPressed && editor_.projectState_ == Editor::EditMode) scene_.New();
+		if (inputManager_.AllKeyStates_[Key_Control].isHeld && inputManager_.AllKeyStates_[Key_N].isPressed && editor_.projectState_ == Editor::EditMode)
+		{
+			hierarchy_.selectedObjects_.clear();
+			scene_.New();
+		}
 		if (inputManager_.AllKeyStates_[Key_Control].isHeld && inputManager_.AllKeyStates_[Key_S].isPressed && editor_.projectState_ == Editor::EditMode) scene_.Save(scene_.fullPath);
 		if (inputManager_.AllKeyStates_[Key_Control].isHeld && inputManager_.AllKeyStates_[Key_L].isPressed && editor_.projectState_ == Editor::EditMode) scene_.Load(scene_.fullPath);
 
