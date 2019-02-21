@@ -57,9 +57,9 @@ namespace Sapphire
 
 			is.close();
 
-			for (auto &object : objectManager_->allObjects_)
+			for (auto &object : objectManager_->GetAllObjects())
 			{
-				objectManager_->CreateObject(object->GetTexture()->path_, "Quad", object->GetPositionWorld(), object);
+				objectManager_->CreateObject(object.lock()->GetTexture()->path_, "Quad", object.lock()->GetPositionWorld(), object.lock());
 			}
 
 			for (auto &actor : actorManager_->allActors_)

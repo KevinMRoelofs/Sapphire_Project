@@ -34,7 +34,7 @@ namespace Sapphire
 	{
 		ShowWorldOrigin();
 		ShowGrid(1);
-		ImGui::Text("Objects: [%i]", objectManager_->allObjects_.size());
+		ImGui::Text("Objects: [%i]", objectManager_->GetAllObjects().size());
 		ImGui::Text("Actors: [%i]", actorManager_->allActors_.size());
 		ImGui::Text("Players: [%i]", playerManager_->players_.size());
 		//ImGui::Text("Camera Pos x [%f]", graphics_.camera_.GetPositionWorld().x);

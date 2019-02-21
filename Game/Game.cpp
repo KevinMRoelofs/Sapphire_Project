@@ -16,7 +16,7 @@ namespace Sapphire
 
 	void Game::StartUp()
 	{
-		playerManager_.CreatePlayer("../Assets/Player/Nico.png", glm::vec3(0));
+		playerManager_->CreatePlayer("../Assets/Player/Nico.png", glm::vec3(0));
 		//load start level/menu here
 	}
 
@@ -28,10 +28,9 @@ namespace Sapphire
 
 		if(gameState_ == Playing)
 		{
-			playerManager_.UpdatePlayers();
-			//std::list<Actor>::iterator it;
-			for (auto& actor : actorManager_.allActors_)
-				//for(std::shared_ptr<Actor> const actor : actorManager_.allActors_)
+			playerManager_->UpdatePlayers();
+
+			for (auto& actor : actorManager_->allActors_)
 			{
 				actor->UpdateActor();
 				

@@ -161,10 +161,10 @@ namespace Sapphire {
 		const unsigned int projLoc = glGetUniformLocation(shaderProgram_, "uniProj");
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection_));
 
-		for (const auto& object : objectManager_->allObjects_)
+		for (const auto& object : objectManager_->GetAllObjects())
 		{
-			object->UpdatePositionScreen();
-			RenderObject(object);
+			object.lock()->UpdatePositionScreen();
+			RenderObject(object.lock());
 		}
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------

@@ -61,9 +61,9 @@ namespace Sapphire
 	void Engine::SetTileSize(const int& newTileSize)
 	{
 		tileSize_ = newTileSize;
-		for(auto &object : objectManager_->allObjects_)
+		for(auto &object : objectManager_->GetAllObjects())
 		{
-			object->UpdateTransform();
+			object.lock()->UpdateTransform();
 		}
 	}
 }

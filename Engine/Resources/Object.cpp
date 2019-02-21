@@ -148,7 +148,9 @@ namespace Sapphire
 			objectPtr = std::make_shared<Object>();
 		}
 
-		InitializeObject(texturePath, meshName, newPos, objectPtr);
+		objectPtr->SetMesh(meshManager_.FindMesh(meshName));
+		objectPtr->SetTexture(textureManager_.GetTexture(texturePath));
+		objectPtr->SetPositionWorld(newPos);
 
 		for (auto &object : allObjects_)
 		{
@@ -161,14 +163,6 @@ namespace Sapphire
 		allObjects_.push_back(objectPtr);
 		return objectPtr;
 	}
-
-	void ObjectManager::InitializeObject(const std::string texturePath, const char* meshName, glm::vec2 newPos, std::shared_ptr<Object> objectPtr)
-	{
-		objectPtr->SetMesh(meshManager_.FindMesh(meshName));
-		objectPtr->SetTexture(textureManager_.GetTexture(texturePath));
-		objectPtr->SetPositionWorld(newPos);
-	}
-
 
 	bool ObjectManager::DeleteObject(std::weak_ptr<Object> objectToDelete)
 	{
@@ -193,12 +187,13 @@ namespace Sapphire
 		lastObjectId_ = 0;
 		allObjects_.clear();
 	}
-
-	void ObjectManager::Update()
+	std::vector<std::weak_ptr<Object>> ObjectManager::GetAllObjects()
 	{
-		for (auto &object : allObjects_)
+		std::vector<std::weak_ptr<Object>> weakObjects;
+		for(auto &object : allObjects_)
 		{
-			//object.UpdateTransform();
+			weakObjects.push_back(object);
 		}
+		return weakObjects;
 	}
 }

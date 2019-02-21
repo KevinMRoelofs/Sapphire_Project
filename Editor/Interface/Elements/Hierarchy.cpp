@@ -33,15 +33,15 @@ namespace Sapphire
 
 	void Hierarchy::Update()
 	{
-		for (auto &object : objectManager_->allObjects_)
+		for (auto &object : objectManager_->GetAllObjects())
 		{
 			//Use lines below later for filters
 			//std::weak_ptr<Actor> actorPtr = std::dynamic_pointer_cast<Actor>(object.lock());
 			//std::weak_ptr<Player> playerPtr = std::dynamic_pointer_cast<Player>(actorPtr.lock());
-			ImGui::PushID(object->GetId());
+			ImGui::PushID(object.lock()->GetId());
 			//bool selectState = false;
 			char buf[32];
-			sprintf_s(buf, "Object %i", object->GetId());
+			sprintf_s(buf, "Object %i", object.lock()->GetId());
 			if (ImGui::Selectable(buf, IsInSelection(object)))
 			{
 				if (inputManager_.AllKeyStates_[Key_Control].isHeld) Deselect(object);
@@ -72,7 +72,7 @@ namespace Sapphire
 			//Select All Objects with CTRL + A
 			if (inputManager_.AllKeyStates_[Key_Control].isHeld && inputManager_.AllKeyStates_[Key_A].isPressed)
 			{
-				for (auto &object : objectManager_->allObjects_)
+				for (auto &object : objectManager_->GetAllObjects())
 				{
 					Select(object, true);
 				}
@@ -86,7 +86,7 @@ namespace Sapphire
 			if (inputManager_.AllKeyStates_[MouseButton_Left].isReleased)
 			{
 				//ImGui::GetOverlayDrawList()->AddRectFilled(ImVec2(cursorPosCurrent.x, cursorPosCurrent.y), ImVec2(cursorPosStart.x, cursorPosStart.y), SelColor);
-				if (!inputManager_.AllKeyStates_[Key_Shift].isHeld && glm::distance(cursorPosStart, cursorPosCurrent) < 4)
+				if (!inputManager_.AllKeyStates_[Key_Shift].isHeld && !inputManager_.AllKeyStates_[Key_Control].isHeld && glm::distance(cursorPosStart, cursorPosCurrent) < 4)
 				{
 					if (!cursorDraggingSelObject) {
 						selectedObjects_.clear();
@@ -97,15 +97,15 @@ namespace Sapphire
 				cursorDraggingSelObject = false;
 
 				//Selecting an object
-				for (auto &object : objectManager_->allObjects_)
+				for (auto &object : objectManager_->GetAllObjects())
 				{
 					if (glm::distance(cursorPosStart, cursorPosCurrent) < 4
-						&& cursorPosCurrent.x > object->GetPositionScreen().x + object->GetMesh()->GetBoundsMin().x * engine_.GetTileSize()
-						&& cursorPosCurrent.x < object->GetPositionScreen().x + object->GetMesh()->GetBoundsMax().x * engine_.GetTileSize()
-						&& cursorPosCurrent.y < object->GetPositionScreen().y - object->GetMesh()->GetBoundsMin().y * engine_.GetTileSize()
-						&& cursorPosCurrent.y > object->GetPositionScreen().y - object->GetMesh()->GetBoundsMax().y * engine_.GetTileSize())
+						&& cursorPosCurrent.x > object.lock()->GetPositionScreen().x + object.lock()->GetMesh()->GetBoundsMin().x * engine_.GetTileSize()
+						&& cursorPosCurrent.x < object.lock()->GetPositionScreen().x + object.lock()->GetMesh()->GetBoundsMax().x * engine_.GetTileSize()
+						&& cursorPosCurrent.y < object.lock()->GetPositionScreen().y - object.lock()->GetMesh()->GetBoundsMin().y * engine_.GetTileSize()
+						&& cursorPosCurrent.y > object.lock()->GetPositionScreen().y - object.lock()->GetMesh()->GetBoundsMax().y * engine_.GetTileSize())
 					{
-						Select(object, inputManager_.AllKeyStates_[Key_Shift].isHeld);
+						Select(object, inputManager_.AllKeyStates_[Key_Shift].isHeld || inputManager_.AllKeyStates_[Key_Control].isHeld);
 						if (inputManager_.AllKeyStates_[Key_Control].isHeld) Deselect(object);
 					}
 				}
@@ -185,13 +185,14 @@ namespace Sapphire
 			sceneView_.drawlist_->AddRectFilled(ImVec2(cursorPosCurrent.x, cursorPosCurrent.y), ImVec2(cursorPosStart.x, cursorPosStart.y), SelColor);
 			if (cursorPosCurrent != cursorPosLastframe)
 			{
-				if (!inputManager_.AllKeyStates_[Key_Shift].isHeld) selectedObjects_.clear();
-				for (auto &object : objectManager_->allObjects_)
+				if (!inputManager_.AllKeyStates_[Key_Shift].isHeld && !inputManager_.AllKeyStates_[Key_Control].isHeld) selectedObjects_.clear();
+				for (auto &object : objectManager_->GetAllObjects())
 				{
-					if ((object->GetPositionScreen().x > cursorPosStart.x && object->GetPositionScreen().x < cursorPosCurrent.x || object->GetPositionScreen().x < cursorPosStart.x && object->GetPositionScreen().x > cursorPosCurrent.x)
-						&& (object->GetPositionScreen().y > cursorPosStart.y && object->GetPositionScreen().y < cursorPosCurrent.y || object->GetPositionScreen().y < cursorPosStart.y && object->GetPositionScreen().y > cursorPosCurrent.y))
+					if ((object.lock()->GetPositionScreen().x > cursorPosStart.x && object.lock()->GetPositionScreen().x < cursorPosCurrent.x || object.lock()->GetPositionScreen().x < cursorPosStart.x && object.lock()->GetPositionScreen().x > cursorPosCurrent.x)
+						&& (object.lock()->GetPositionScreen().y > cursorPosStart.y && object.lock()->GetPositionScreen().y < cursorPosCurrent.y || object.lock()->GetPositionScreen().y < cursorPosStart.y && object.lock()->GetPositionScreen().y > cursorPosCurrent.y))
 					{
 						Select(object, true);
+						if (inputManager_.AllKeyStates_[Key_Control].isHeld) Deselect(object);
 					}
 				}
 			}

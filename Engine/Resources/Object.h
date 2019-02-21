@@ -86,12 +86,11 @@ namespace Sapphire
 		~ObjectManager();
 
 		std::shared_ptr<Object> CreateObject(const std::string texturePath, const char* meshName, glm::vec2 newPos, std::shared_ptr<Object> ObjectPtr);
-		void InitializeObject(const std::string texturePath, const char* meshName, glm::vec2 newPos, std::shared_ptr<Object> objectPtr);
+
 		bool DeleteObject(std::weak_ptr<Object> objectToDelete);
 		void DeleteAllObjects();
-		void Update();
 
-		std::vector<std::shared_ptr<Object>> allObjects_;
+		std::vector<std::weak_ptr<Object>> GetAllObjects();
 		int lastObjectId_;
 
 		template<class Archive>
@@ -99,10 +98,12 @@ namespace Sapphire
 		{
 			archive(allObjects_);
 		}
+	private:
+		std::vector<std::shared_ptr<Object>> allObjects_;
+
 	};
 
 	extern std::shared_ptr<ObjectManager> objectManager_;
 }
-
 
 CEREAL_REGISTER_TYPE(Sapphire::Object)

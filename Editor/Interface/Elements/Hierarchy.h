@@ -6,9 +6,6 @@
 #include <memory>
 #include <Editor/Dependencies/imgui-master/imgui.h>
 
-//struct ImColor;
-//class Object;
-
 namespace Sapphire
 {
 	class Hierarchy : public InterfaceElement
@@ -32,6 +29,12 @@ namespace Sapphire
 		ImColor SelColor;
 
 		std::vector<std::weak_ptr<Object>> selectedObjects_;
+
+		template<class Archive>
+		void serialize(Archive & archive)
+		{
+			archive(selectedObjects_);
+		}
 	};
 
 	extern Hierarchy hierarchy_;
